@@ -33,14 +33,22 @@ SPEED = 20
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
 # Заголовок окна игрового поля:
-pygame.display.set_caption('Змейка')
+pygame.display.set_caption("Змейка")
 
 # Настройка времени:
 clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры.
-...
+class GameObject:
+    """Базовый класс для всех объектов игры."""
+
+    def __init__(self, position, body_color):
+        self.position = position
+        self.body_color = body_color
+
+    def draw(self):
+        pass
 
 
 def main():
@@ -49,14 +57,14 @@ def main():
     # Тут нужно создать экземпляры классов.
     ...
 
-    # while True:
-    #     clock.tick(SPEED)
+    while True:
+        clock.tick(SPEED)
 
         # Тут опишите основную логику игры.
         # ...
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 
