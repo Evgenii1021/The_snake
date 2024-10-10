@@ -175,6 +175,8 @@ def main():
             <= snake.positions[0][1]
             <= apple.position[1] + GRID_SIZE
         ):
+            snake.length += 1
+            snake.positions.insert(-1, apple.position)
             apple.randomize_position()
 
         pygame.display.update()
