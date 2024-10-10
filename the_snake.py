@@ -69,7 +69,7 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
-    '''Класс змейки.'''
+    """Класс змейки."""
 
     def __init__(self):
         super().__init__()
@@ -98,7 +98,7 @@ class Snake(GameObject):
 
     def draw(self):
         for position in self.positions[:-1]:
-            rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
+            rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, self.body_color, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
@@ -114,6 +114,22 @@ class Snake(GameObject):
 
     def reset(self):
         self.positions = [(randint(0, GRID_WIDTH - 1), randint(0, GRID_HEIGHT - 1))]
+
+
+def handle_keys(game_object):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            raise SystemExit
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP and game_object.direction != DOWN:
+                game_object.next_direction = UP
+            elif event.key == pygame.K_DOWN and game_object.direction != UP:
+                game_object.next_direction = DOWN
+            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
+                game_object.next_direction = LEFT
+            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
+                game_object.next_direction = RIGHT
 
 
 def main():
