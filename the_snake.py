@@ -51,6 +51,23 @@ class GameObject:
         pass
 
 
+class Apple(GameObject):
+    """Класс яблока."""
+
+    def __init__(self):
+        super().__init__()
+        self.position = Apple.randomize_position
+        self.body_color = APPLE_COLOR
+
+    def randomize_position(self):
+        self.position = (randint(0, GRID_WIDTH - 1), randint(0, GRID_HEIGHT - 1))
+
+    def draw(self):
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+
+
 def main():
     # Инициализация PyGame:
     pygame.init()
