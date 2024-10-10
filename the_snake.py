@@ -43,9 +43,9 @@ clock = pygame.time.Clock()
 class GameObject:
     """Базовый класс для всех объектов игры."""
 
-    def __init__(self, position, body_color):
-        self.position = position
-        self.body_color = body_color
+    def __init__(self):
+        self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
+        self.body_color = None
 
     def draw(self):
         pass
@@ -136,13 +136,21 @@ def main():
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
-    ...
+    snake = Snake()
+    apple = Apple()
 
     while True:
         clock.tick(SPEED)
 
         # Тут опишите основную логику игры.
-        # ...
+        handle_keys(snake)
+        snake.move()
+        if snake.positions[0] == apple.position:
+            snake.positions[0] = apple.position
+            apple.randomize_position()
+
+        snake.draw()
+        apple.draw()
 
 
 if __name__ == "__main__":
