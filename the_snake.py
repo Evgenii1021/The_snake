@@ -100,13 +100,13 @@ class Snake(GameObject):
         elif self.direction == DOWN:
             self.positions[0] = (head_x, head_y + GRID_SIZE)
 
-        if self.positions[0][0] >= SCREEN_WIDTH - GRID_SIZE:
+        if self.positions[0][0] >= SCREEN_WIDTH:
             self.positions[0] = (0, self.positions[0][1])
         elif self.positions[0][0] < 0:
             self.positions[0] = (SCREEN_WIDTH - GRID_SIZE, self.positions[0][1])
         elif self.positions[0][1] < 0:
             self.positions[0] = (self.positions[0][0], SCREEN_HEIGHT - GRID_SIZE)
-        elif self.positions[0][1] >= SCREEN_WIDTH - GRID_SIZE:
+        elif self.positions[0][1] >= SCREEN_HEIGHT:
             self.positions[0] = (self.positions[0][0], 0)
 
         self.positions.insert(0, self.positions[0])
