@@ -4,8 +4,10 @@
 Включает в себя:
 - Базовый класс GameObject объектов игры.
 - Дочерний класс Snake для управления движением и состоянием змейки.
-- Дочерний класс Apple для создания яблока и управления его положением на игровом поле.
-- Основной цикл игры с обработкой событий, отрисовкой объектов и логикой столкновений.
+- Дочерний класс Apple для создания яблока и управления его положением
+  на игровом поле.
+- Основной цикл игры с обработкой событий, отрисовкой объектов и
+  логикой столкновений.
 
 Использует библиотеку Pygame для графического отображения.
 """
@@ -131,9 +133,13 @@ class Snake(GameObject):
         if self.positions[0][0] >= SCREEN_WIDTH:
             self.positions[0] = (0, self.positions[0][1])
         elif self.positions[0][0] < 0:
-            self.positions[0] = (SCREEN_WIDTH - GRID_SIZE, self.positions[0][1])
+            self.positions[0] = (
+                SCREEN_WIDTH - GRID_SIZE,
+                self.positions[0][1])
         elif self.positions[0][1] < 0:
-            self.positions[0] = (self.positions[0][0], SCREEN_HEIGHT - GRID_SIZE)
+            self.positions[0] = (
+                self.positions[0][0],
+                SCREEN_HEIGHT - GRID_SIZE)
         elif self.positions[0][1] >= SCREEN_HEIGHT:
             self.positions[0] = (self.positions[0][0], 0)
 
