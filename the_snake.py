@@ -76,10 +76,12 @@ class Snake(GameObject):
 
     def __init__(self):
         super().__init__()
-        self.positions = [self.position]
+        self.positions = [
+            self.position,
+        ]
         self.body_color = SNAKE_COLOR
         self.length = 1
-        self.direction = UP
+        self.direction = RIGHT
         self.next_direction = None
         self.last = None
 
@@ -93,6 +95,8 @@ class Snake(GameObject):
 
     def move(self):
         head_x, head_y = self.get_head_position()
+
+        self.positions.insert(0, self.positions[0])
 
         if self.direction == RIGHT:
             self.positions[0] = (head_x + GRID_SIZE, head_y)
@@ -112,9 +116,7 @@ class Snake(GameObject):
         elif self.positions[0][1] >= SCREEN_HEIGHT:
             self.positions[0] = (self.positions[0][0], 0)
 
-        self.positions.insert(0, self.positions[0])
-
-        if len(self.positions) > self.length:
+        if len(self.positions) > self.length + 1:
             self.positions.pop()
 
     def draw(self):
@@ -136,7 +138,7 @@ class Snake(GameObject):
     def reset(self):
         self.positions = [self.position]
         self.length = 1
-        self.direction = choice(LEFT, RIGHT, UP, DOWN)
+        self.direction = choice([LEFT, RIGHT, UP, DOWN])
 
 
 def handle_keys(game_object):
@@ -169,20 +171,14 @@ def main():
         handle_keys(snake)
         snake.update_direction()
         snake.move()
-
-        if (
-            snake.positions[0][0] == apple.position[0]
-            and snake.positions[0][1] == apple.position[1]
-        ):
-            snake.length += 1
-            snake.positions.insert(-1, apple.position)
+        if apple.position in snake.positions:
             apple.randomize_position()
+            snake.length += 1
 
-        pygame.display.update()
-        screen.fill(BOARD_BACKGROUND_COLOR)
         snake.draw()
         apple.draw()
-        pygame.display.flip()
+        pygame.display.update()
+        screen.fill(BOARD_BACKGROUND_COLOR)
 
 
 if __name__ == "__main__":
