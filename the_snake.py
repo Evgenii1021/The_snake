@@ -175,6 +175,9 @@ def main():
             apple.randomize_position()
             snake.length += 1
 
+        if snake.positions[0] in snake.positions[1:]:
+            snake.reset()
+
         snake.draw()
         apple.draw()
         pygame.display.update()
