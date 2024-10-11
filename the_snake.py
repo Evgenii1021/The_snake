@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import choice, randrange
 
 import pygame
 
@@ -60,7 +60,10 @@ class Apple(GameObject):
         self.randomize_position()
 
     def randomize_position(self):
-        self.position = (randint(0, SCREEN_WIDTH - 1), randint(0, SCREEN_HEIGHT - 1))
+        self.position = (
+            randrange(0, SCREEN_WIDTH, GRID_SIZE),
+            randrange(0, SCREEN_HEIGHT, GRID_SIZE),
+        )
 
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
@@ -168,12 +171,8 @@ def main():
         snake.move()
 
         if (
-            apple.position[0] - GRID_SIZE
-            <= snake.positions[0][0]
-            <= apple.position[0] + GRID_SIZE
-            and apple.position[1] - GRID_SIZE
-            <= snake.positions[0][1]
-            <= apple.position[1] + GRID_SIZE
+            snake.positions[0][0] == apple.position[0]
+            and snake.positions[0][1] == apple.position[1]
         ):
             snake.length += 1
             snake.positions.insert(-1, apple.position)
