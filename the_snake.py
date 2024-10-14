@@ -28,17 +28,21 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Цвет фона - черный:
-BOARD_BACKGROUND_COLOR = (0, 0, 0)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+SOFT_CYAN = (93, 216, 228)
+
+BOARD_BACKGROUND_COLOR = BLACK
 
 # Цвет границы ячейки
-BORDER_COLOR = (93, 216, 228)
+BORDER_COLOR = SOFT_CYAN
 
 # Цвет яблока
-APPLE_COLOR = (255, 0, 0)
+APPLE_COLOR = RED
 
 # Цвет змейки
-SNAKE_COLOR = (0, 255, 0)
+SNAKE_COLOR = GREEN
 
 # Скорость движения змейки:
 SPEED = 20
@@ -133,13 +137,9 @@ class Snake(GameObject):
         if self.positions[0][0] >= SCREEN_WIDTH:
             self.positions[0] = (0, self.positions[0][1])
         elif self.positions[0][0] < 0:
-            self.positions[0] = (
-                SCREEN_WIDTH - GRID_SIZE,
-                self.positions[0][1])
+            self.positions[0] = (SCREEN_WIDTH - GRID_SIZE, self.positions[0][1])
         elif self.positions[0][1] < 0:
-            self.positions[0] = (
-                self.positions[0][0],
-                SCREEN_HEIGHT - GRID_SIZE)
+            self.positions[0] = (self.positions[0][0], SCREEN_HEIGHT - GRID_SIZE)
         elif self.positions[0][1] >= SCREEN_HEIGHT:
             self.positions[0] = (self.positions[0][0], 0)
 
