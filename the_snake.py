@@ -56,7 +56,7 @@ class GameObject:
 
     def draw(self):
         """Метод отрисовки базового класса."""
-        pass
+        raise NotImplementedError("The draw() method must be overridden in a subclass.")
 
 
 class Apple(GameObject):
