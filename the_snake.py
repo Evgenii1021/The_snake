@@ -93,14 +93,11 @@ class Snake(GameObject):
         """Инициализация дочернего класса змейки."""
         super().__init__(body_color=body_color)
         self.reset()
-        self.next_direction = None
         self.last = None
 
-    def update_direction(self):
+    def update_direction(self, next_direction):
         """Метод обновления направления движения змейки."""
-        if self.next_direction:
-            self.direction = self.next_direction
-            self.next_direction = None
+        self.direction = next_direction
 
     def get_head_position(self):
         """Метод получения положения головы змейки."""
@@ -163,13 +160,13 @@ def handle_keys(game_object):
             raise SystemExit
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_UP and game_object.direction != DOWN:
-                game_object.next_direction = UP
+                game_object.update_direction(UP)
             elif event.key == pg.K_DOWN and game_object.direction != UP:
-                game_object.next_direction = DOWN
+                game_object.update_direction(DOWN)
             elif event.key == pg.K_LEFT and game_object.direction != RIGHT:
-                game_object.next_direction = LEFT
+                game_object.update_direction(LEFT)
             elif event.key == pg.K_RIGHT and game_object.direction != LEFT:
-                game_object.next_direction = RIGHT
+                game_object.update_direction(RIGHT)
 
 
 def main():
@@ -183,7 +180,6 @@ def main():
         clock.tick(SPEED)
 
         handle_keys(snake)
-        snake.update_direction()
         snake.move()
         if apple.position in snake.positions:
             apple.randomize_position(snake_positions=snake.positions)
