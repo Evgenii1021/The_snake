@@ -20,6 +20,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
+DEFAULT_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -48,10 +49,10 @@ clock = pg.time.Clock()
 class GameObject:
     """Базовый класс для всех объектов игры."""
 
-    def __init__(self):
+    def __init__(self, position=DEFAULT_POSITION, body_color=BOARD_BACKGROUND_COLOR):
         """Инициализация базового класса."""
-        self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
-        self.body_color = None
+        self.position = position
+        self.body_color = body_color
 
     def draw(self):
         """Метод отрисовки базового класса."""
