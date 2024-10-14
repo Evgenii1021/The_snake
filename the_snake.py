@@ -16,13 +16,11 @@ from random import choice, randrange
 
 import pygame as pg
 
-# Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-# Направления движения:
 UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
@@ -34,30 +32,19 @@ GREEN = (0, 255, 0)
 SOFT_CYAN = (93, 216, 228)
 
 BOARD_BACKGROUND_COLOR = BLACK
-
-# Цвет границы ячейки
 BORDER_COLOR = SOFT_CYAN
-
-# Цвет яблока
 APPLE_COLOR = RED
-
-# Цвет змейки
 SNAKE_COLOR = GREEN
 
-# Скорость движения змейки:
 SPEED = 20
 
-# Настройка игрового окна:
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
-# Заголовок окна игрового поля:
 pg.display.set_caption("Змейка")
 
-# Настройка времени:
 clock = pg.time.Clock()
 
 
-# Тут опишите все классы игры.
 class GameObject:
     """Базовый класс для всех объектов игры."""
 
@@ -153,12 +140,10 @@ class Snake(GameObject):
             pg.draw.rect(screen, self.body_color, rect)
             pg.draw.rect(screen, BORDER_COLOR, rect, 1)
 
-        # Отрисовка головы змейки
         head_rect = pg.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, self.body_color, head_rect)
         pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
 
-        # Затирание последнего сегмента
         if self.last:
             last_rect = pg.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
@@ -189,16 +174,14 @@ def handle_keys(game_object):
 
 def main():
     """Основная функция."""
-    # Инициализация PyGame:
     pg.init()
-    # Тут нужно создать экземпляры классов.
+
     snake = Snake()
     apple = Apple()
 
     while True:
         clock.tick(SPEED)
 
-        # Тут опишите основную логику игры.
         handle_keys(snake)
         snake.update_direction()
         snake.move()
