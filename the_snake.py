@@ -67,11 +67,16 @@ class Apple(GameObject):
         super().__init__(body_color=body_color)
         self.randomize_position()
 
-    def randomize_position(self):
+    def randomize_position(self, snake_positions=DEFAULT_POSITION):
         """Метод для установки случайного положения яблока."""
-        self.position = (
+        random_positions = (
             randrange(0, SCREEN_WIDTH, GRID_SIZE),
             randrange(0, SCREEN_HEIGHT, GRID_SIZE),
+        )
+        self.position = (
+            random_positions
+            if random_positions not in snake_positions
+            else self.randomize_position(snake_positions)
         )
 
     def draw(self):
@@ -186,7 +191,7 @@ def main():
         snake.update_direction()
         snake.move()
         if apple.position in snake.positions:
-            apple.randomize_position()
+            apple.randomize_position(snake_positions=snake.positions)
             snake.length += 1
 
         if snake.positions[0] in snake.positions[1:]:
