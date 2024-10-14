@@ -89,15 +89,10 @@ class Apple(GameObject):
 class Snake(GameObject):
     """Класс змейки."""
 
-    def __init__(self):
+    def __init__(self, body_color=SNAKE_COLOR):
         """Инициализация дочернего класса змейки."""
-        super().__init__()
-        self.positions = [
-            self.position,
-        ]
-        self.body_color = SNAKE_COLOR
-        self.length = 1
-        self.direction = RIGHT
+        super().__init__(body_color=body_color)
+        self.reset()
         self.next_direction = None
         self.last = None
 
