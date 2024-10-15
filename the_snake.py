@@ -150,7 +150,7 @@ def handle_keys(game_object):
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
-            sys.exit(0)
+            sys.exit()
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_UP and game_object.direction != DOWN:
                 game_object.update_direction(UP)
@@ -160,6 +160,9 @@ def handle_keys(game_object):
                 game_object.update_direction(LEFT)
             elif event.key == pg.K_RIGHT and game_object.direction != LEFT:
                 game_object.update_direction(RIGHT)
+            elif event.key == pg.K_ESCAPE:
+                pg.quit()
+                sys.exit()
 
 
 def main():
