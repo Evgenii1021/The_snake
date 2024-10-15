@@ -50,16 +50,22 @@ clock = pg.time.Clock()
 class GameObject:
     """Базовый класс для всех объектов игры."""
 
-    def __init__(self, position=DEFAULT_POSITION, body_color=BOARD_BACKGROUND_COLOR):
+    def __init__(
+        self, position=DEFAULT_POSITION, body_color=BOARD_BACKGROUND_COLOR
+    ):
         """Инициализация базового класса."""
         self.position = position
         self.body_color = body_color
 
     def draw(self):
         """Метод отрисовки базового класса."""
-        raise NotImplementedError("The draw() method must be overridden in a subclass.")
+        raise NotImplementedError(
+            "The draw() method must be overridden in a subclass."
+        )
 
-    def draw_cell(self, screen, position, body_color, border_color=BORDER_COLOR):
+    def draw_cell(
+        self, screen, position, body_color, border_color=BORDER_COLOR
+    ):
         """Метод для отрисовки одной ячейки."""
         rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, body_color, rect)
@@ -120,7 +126,9 @@ class Snake(GameObject):
         new_position = (head_x, head_y)
         self.positions.insert(0, new_position)
 
-        self.last = self.positions.pop() if len(self.positions) > self.length else None
+        self.last = (
+            self.positions.pop() if len(self.positions) > self.length else None
+        )
 
     def draw(self):
         """Метод отрисовки змейки."""
@@ -135,7 +143,10 @@ class Snake(GameObject):
 
         if self.last:
             self.draw_cell(
-                screen, self.last, BOARD_BACKGROUND_COLOR, BOARD_BACKGROUND_COLOR
+                screen,
+                self.last,
+                BOARD_BACKGROUND_COLOR,
+                BOARD_BACKGROUND_COLOR,
             )
 
     def reset(self):
@@ -166,6 +177,25 @@ def handle_keys(game_object):
                 sys.exit()
 
 
+def update_positions(game_object1, game_object2):
+    """Функция обновления позиций змейки."""
+    if game_object2.position in game_object1.positions:
+        game_object2.randomize_position(snake_positions=game_object1.positions)
+        game_object1.length += 1
+    elif game_object1.get_head_position() in game_object1.positions[1:]:
+        if len(game_object1.positions) > 3:
+            h_x, h_y = game_object1.get_head_position()
+            body = game_object1.positions[1:]
+
+            if (h_x, h_y) in [
+                (body[0][0], body[0][1] + GRID_SIZE),
+                (body[0][0], body[0][1] - GRID_SIZE),
+                (body[0][0] + GRID_SIZE, body[0][1]),
+                (body[0][0] - GRID_SIZE, body[0][1]),
+            ]:
+                game_object1.reset()
+
+
 def main():
     """Основная функция."""
     pg.init()
@@ -179,33 +209,7 @@ def main():
         handle_keys(snake)
         snake.move()
 
-        if apple.position in snake.positions:
-            apple.randomize_position(snake_positions=snake.positions)
-            snake.length += 1
-        elif snake.get_head_position() in snake.positions[1:]:
-            if len(snake.positions) > 3:
-                head_position = snake.get_head_position()
-                body_positions = snake.positions[1:]
-
-                if (
-                    (
-                        head_position[0] == body_positions[0][0]
-                        and head_position[1] == body_positions[0][1] + GRID_SIZE
-                    )
-                    or (
-                        head_position[0] == body_positions[0][0]
-                        and head_position[1] == body_positions[0][1] - GRID_SIZE
-                    )
-                    or (
-                        head_position[1] == body_positions[0][1]
-                        and head_position[0] == body_positions[0][0] + GRID_SIZE
-                    )
-                    or (
-                        head_position[1] == body_positions[0][1]
-                        and head_position[0] == body_positions[0][0] - GRID_SIZE
-                    )
-                ):
-                    snake.reset()
+        update_positions(snake, apple)
 
         snake.draw()
         apple.draw()
