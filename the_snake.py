@@ -143,6 +143,7 @@ class Snake(GameObject):
         self.positions = [self.position]
         self.length = 1
         self.direction = choice([LEFT, RIGHT, UP, DOWN])
+        screen.fill(BOARD_BACKGROUND_COLOR)
 
 
 def handle_keys(game_object):
@@ -177,17 +178,38 @@ def main():
 
         handle_keys(snake)
         snake.move()
+
         if apple.position in snake.positions:
             apple.randomize_position(snake_positions=snake.positions)
             snake.length += 1
+        elif snake.get_head_position() in snake.positions[1:]:
+            if len(snake.positions) > 3:
+                head_position = snake.get_head_position()
+                body_positions = snake.positions[1:]
 
-        if snake.positions[0] in snake.positions[1:]:
-            snake.reset()
+                if (
+                    (
+                        head_position[0] == body_positions[0][0]
+                        and head_position[1] == body_positions[0][1] + GRID_SIZE
+                    )
+                    or (
+                        head_position[0] == body_positions[0][0]
+                        and head_position[1] == body_positions[0][1] - GRID_SIZE
+                    )
+                    or (
+                        head_position[1] == body_positions[0][1]
+                        and head_position[0] == body_positions[0][0] + GRID_SIZE
+                    )
+                    or (
+                        head_position[1] == body_positions[0][1]
+                        and head_position[0] == body_positions[0][0] - GRID_SIZE
+                    )
+                ):
+                    snake.reset()
 
         snake.draw()
         apple.draw()
         pg.display.update()
-        screen.fill(BOARD_BACKGROUND_COLOR)
 
 
 if __name__ == "__main__":
