@@ -15,6 +15,7 @@
 from random import choice, randrange
 
 import pygame as pg
+import sys
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -149,7 +150,7 @@ def handle_keys(game_object):
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
-            raise SystemExit
+            sys.exit(0)
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_UP and game_object.direction != DOWN:
                 game_object.update_direction(UP)
