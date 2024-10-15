@@ -58,6 +58,12 @@ class GameObject:
         """Метод отрисовки базового класса."""
         raise NotImplementedError("The draw() method must be overridden in a subclass.")
 
+    def draw_cell(self, screen, position, body_color, border_color=BORDER_COLOR):
+        """Метод для отрисовки одной ячейки."""
+        rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
+        pg.draw.rect(screen, body_color, rect)
+        pg.draw.rect(screen, border_color, rect, 1)
+
 
 class Apple(GameObject):
     """Класса яблока."""
@@ -105,7 +111,6 @@ class Snake(GameObject):
 
     def move(self):
         """Метод движения змейки."""
-        self.positions.insert(0, self.positions[0])
         head_x, head_y = self.get_head_position()
 
         dx, dy = self.direction
@@ -113,26 +118,26 @@ class Snake(GameObject):
         head_x = (head_x + dx * GRID_SIZE) % SCREEN_WIDTH
         head_y = (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT
 
-        self.positions[0] = (head_x, head_y)
+        new_position = (head_x, head_y)
+        self.positions.insert(0, new_position)
 
-        self.last = (
-            self.positions.pop() if len(self.positions) > self.length + 1 else None
-        )
+        self.last = self.positions.pop() if len(self.positions) > self.length else None
 
     def draw(self):
         """Метод отрисовки змейки."""
-        for position in self.positions[:-1]:
-            rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
-            pg.draw.rect(screen, self.body_color, rect)
-            pg.draw.rect(screen, BORDER_COLOR, rect, 1)
+        if len(self.positions) == 1:
+            screen.fill(BOARD_BACKGROUND_COLOR)
 
-        head_rect = pg.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
-        pg.draw.rect(screen, self.body_color, head_rect)
-        pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
+        self.draw_cell(screen, self.positions[0], SNAKE_COLOR)
+
+        if len(self.positions) > 1:
+            for position in self.positions[1:]:
+                self.draw_cell(screen, position, SNAKE_COLOR)
 
         if self.last:
-            last_rect = pg.Rect(self.last, (GRID_SIZE, GRID_SIZE))
-            pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
+            self.draw_cell(
+                screen, self.last, BOARD_BACKGROUND_COLOR, BOARD_BACKGROUND_COLOR
+            )
 
     def reset(self):
         """Метод сброса змейки."""
