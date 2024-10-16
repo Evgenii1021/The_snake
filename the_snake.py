@@ -76,12 +76,13 @@ class GameObject:
 class Apple(GameObject):
     """Класса яблока."""
 
-    def __init__(self, body_color=APPLE_COLOR):
+    def __init__(self, occupied_positions, body_color=APPLE_COLOR):
         """Инициализация дочернего класса яблока."""
         super().__init__(body_color=body_color)
-        self.randomize_position()
+        self.occupied_positions = occupied_positions
+        self.randomize_position(occupied_positions=self.occupied_positions)
 
-    def randomize_position(self, snake_positions=DEFAULT_POSITION):
+    def randomize_position(self, occupied_positions):
         """Метод для установки случайного положения яблока."""
         random_positions = (
             randrange(0, SCREEN_WIDTH, GRID_SIZE),
@@ -89,8 +90,8 @@ class Apple(GameObject):
         )
         self.position = (
             random_positions
-            if random_positions not in snake_positions
-            else self.randomize_position(snake_positions)
+            if random_positions not in occupied_positions
+            else self.randomize_position(self.occupied_positions)
         )
 
     def draw(self):
@@ -174,7 +175,9 @@ def handle_keys(game_object):
 def update_positions(game_object1, game_object2):
     """Функция обновления позиций змейки."""
     if game_object2.position in game_object1.positions:
-        game_object2.randomize_position(snake_positions=game_object1.positions)
+        game_object2.randomize_position(
+            occupied_positions=game_object1.positions
+        )
         game_object1.length += 1
     elif game_object1.get_head_position() in game_object1.positions[4:]:
         game_object1.reset()
@@ -185,7 +188,7 @@ def main():
     pg.init()
 
     snake = Snake()
-    apple = Apple()
+    apple = Apple(snake.positions)
 
     while True:
         clock.tick(SPEED)
