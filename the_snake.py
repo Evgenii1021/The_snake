@@ -176,18 +176,8 @@ def update_positions(game_object1, game_object2):
     if game_object2.position in game_object1.positions:
         game_object2.randomize_position(snake_positions=game_object1.positions)
         game_object1.length += 1
-    elif game_object1.get_head_position() in game_object1.positions[1:]:
-        if len(game_object1.positions) > 3:
-            h_x, h_y = game_object1.get_head_position()
-            body = game_object1.positions[1:]
-
-            if (h_x, h_y) in [
-                (body[0][0], body[0][1] + GRID_SIZE),
-                (body[0][0], body[0][1] - GRID_SIZE),
-                (body[0][0] + GRID_SIZE, body[0][1]),
-                (body[0][0] - GRID_SIZE, body[0][1]),
-            ]:
-                game_object1.reset()
+    elif game_object1.get_head_position() in game_object1.positions[4:]:
+        game_object1.reset()
 
 
 def main():
