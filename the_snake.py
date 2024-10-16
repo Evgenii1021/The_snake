@@ -12,8 +12,8 @@
 Использует библиотеку Pygame для графического отображения.
 """
 
-from random import choice, randrange
 import sys
+from random import choice, randrange
 
 import pygame as pg
 
@@ -60,7 +60,7 @@ class GameObject:
     def draw(self):
         """Метод отрисовки базового класса."""
         raise NotImplementedError(
-            f"The draw() method must be"
+            "The draw() method must be"
             f"overridden in a subclass {self.__class__.__name__}."
         )
 
@@ -81,8 +81,7 @@ class Apple(GameObject):
         super().__init__(body_color=body_color)
         if occupied_positions is None:
             occupied_positions = []
-        self.occupied_positions = occupied_positions
-        self.randomize_position(occupied_positions=self.occupied_positions)
+        self.randomize_position(occupied_positions)
 
     def randomize_position(self, occupied_positions):
         """Метод для установки случайного положения яблока."""
@@ -93,7 +92,7 @@ class Apple(GameObject):
         self.position = (
             random_positions
             if random_positions not in occupied_positions
-            else self.randomize_position(self.occupied_positions)
+            else self.randomize_position(occupied_positions)
         )
 
     def draw(self):
