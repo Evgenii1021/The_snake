@@ -13,9 +13,9 @@
 """
 
 from random import choice, randrange
+import sys
 
 import pygame as pg
-import sys
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -60,7 +60,8 @@ class GameObject:
     def draw(self):
         """Метод отрисовки базового класса."""
         raise NotImplementedError(
-            "The draw() method must be overridden in a subclass."
+            f"The draw() method must be"
+            f"overridden in a subclass {self.__class__.__name__}."
         )
 
     def draw_cell(
@@ -104,7 +105,6 @@ class Snake(GameObject):
         """Инициализация дочернего класса змейки."""
         super().__init__(body_color=body_color)
         self.reset()
-        self.last = None
 
     def update_direction(self, next_direction):
         """Метод обновления направления движения змейки."""
@@ -132,14 +132,7 @@ class Snake(GameObject):
 
     def draw(self):
         """Метод отрисовки змейки."""
-        if len(self.positions) == 1:
-            screen.fill(BOARD_BACKGROUND_COLOR)
-
-        self.draw_cell(screen, self.positions[0], SNAKE_COLOR)
-
-        if len(self.positions) > 1:
-            for position in self.positions[1:]:
-                self.draw_cell(screen, position, SNAKE_COLOR)
+        self.draw_cell(screen, self.get_head_position(), SNAKE_COLOR)
 
         if self.last:
             self.draw_cell(
@@ -154,6 +147,7 @@ class Snake(GameObject):
         self.positions = [self.position]
         self.length = 1
         self.direction = choice([LEFT, RIGHT, UP, DOWN])
+        self.last = None
         screen.fill(BOARD_BACKGROUND_COLOR)
 
 
