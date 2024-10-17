@@ -28,12 +28,13 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
+WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 SOFT_CYAN = (93, 216, 228)
 
-BOARD_BACKGROUND_COLOR = BLACK
+BOARD_BACKGROUND_COLOR = WHITE
 BORDER_COLOR = SOFT_CYAN
 APPLE_COLOR = RED
 SNAKE_COLOR = GREEN
@@ -43,6 +44,9 @@ SPEED = 20
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
 pg.display.set_caption("Змейка")
+
+bg = pg.image.load("img/background.jpg")
+bg = pg.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 clock = pg.time.Clock()
 
@@ -137,12 +141,13 @@ class Snake(GameObject):
         self.draw_cell(screen, self.get_head_position(), SNAKE_COLOR)
 
         if self.last:
-            self.draw_cell(
-                screen,
-                self.last,
-                BOARD_BACKGROUND_COLOR,
-                BOARD_BACKGROUND_COLOR,
-            )
+            transparent_surface = pg.Surface((GRID_SIZE, GRID_SIZE))
+            transparent_surface.set_alpha(0)
+            screen.blit(transparent_surface, self.last)
+
+        if self.length >= 2:
+            for position in self.positions[1:]:
+                self.draw_cell(screen, position, SNAKE_COLOR)
 
     def reset(self):
         """Метод сброса змейки."""
@@ -193,14 +198,15 @@ def main():
 
     while True:
         clock.tick(SPEED)
+        screen.blit( bg, ( 0,0 ) )
 
         handle_keys(snake)
         snake.move()
 
         update_positions(snake, apple)
 
-        snake.draw()
         apple.draw()
+        snake.draw()
         pg.display.update()
 
 
