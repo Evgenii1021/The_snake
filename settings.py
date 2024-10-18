@@ -1,0 +1,42 @@
+import pygame as pg
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
+GRID_SIZE = 20
+GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
+GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
+DEFAULT_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
+UP = (0, -1)
+DOWN = (0, 1)
+LEFT = (-1, 0)
+RIGHT = (1, 0)
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+SOFT_CYAN = (93, 216, 228)
+
+BOARD_BACKGROUND_COLOR = WHITE
+BORDER_COLOR = SOFT_CYAN
+APPLE_COLOR = RED
+SNAKE_COLOR = GREEN
+
+SPEED = 14
+
+screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
+
+pg.display.set_caption("Змейка")
+
+bg = pg.image.load("img/bg.jpg")
+bg = pg.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+snake_head_image = pg.image.load("img/snake_head.png")
+
+snake_body_image = pg.image.load("img/snake_body.png")
+
+snake_tail_image = pg.image.load("img/snake_tail.png")
+
+apple_image = pg.image.load("img/apple.png")
+
+clock = pg.time.Clock()
