@@ -11,6 +11,7 @@ from settings import (
     screen,
     snake_body_image,
     snake_head_image,
+    snake_tail_image,
     LEFT,
     RIGHT,
     UP,
@@ -104,12 +105,27 @@ class Snake(GameObject):
 
     def draw(self):
         """Метод отрисовки змейки."""
-        self.draw_cell(screen, self.get_head_position(), snake_head_image)
+        if self.direction == UP:
+            rotated_image_head = pg.transform.rotate(snake_head_image, 180)
+        elif self.direction == DOWN:
+            rotated_image_head = snake_head_image
+        elif self.direction == LEFT:
+            rotated_image_head = pg.transform.rotate(snake_head_image, 270)
+        elif self.direction == RIGHT:
+            rotated_image_head = pg.transform.rotate(snake_head_image, 90)
+
+        self.draw_cell(screen, self.get_head_position(), rotated_image_head)
 
         if self.last:
-            transparent_surface = pg.Surface((GRID_SIZE, GRID_SIZE))
-            transparent_surface.set_alpha(0)
-            screen.blit(transparent_surface, self.last)
+            if self.direction == UP:
+                rotated_image_tail = snake_tail_image
+            elif self.direction == DOWN:
+                rotated_image_tail = pg.transform.rotate(snake_tail_image, 180)
+            elif self.direction == LEFT:
+                rotated_image_tail = pg.transform.rotate(snake_tail_image, 90)
+            elif self.direction == RIGHT:
+                rotated_image_tail = pg.transform.rotate(snake_tail_image, 270)
+            self.draw_cell(screen, self.last, rotated_image_tail)
 
         if self.length >= 2:
             for position in self.positions[1:]:

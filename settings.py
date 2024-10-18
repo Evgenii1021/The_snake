@@ -31,12 +31,16 @@ pg.display.set_caption("Змейка")
 bg = pg.image.load("img/bg.jpg")
 bg = pg.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-snake_head_image = pg.image.load("img/snake_head.png")
+snake_head_image = pg.image.load("img/HEAD.png")
+snake_head_image = pg.transform.scale(snake_head_image, (GRID_SIZE, GRID_SIZE))
 
-snake_body_image = pg.image.load("img/snake_body.png")
+snake_body_image = pg.image.load("img/BODY.png")
+snake_body_image = pg.transform.scale(snake_body_image, (GRID_SIZE, GRID_SIZE))
 
-snake_tail_image = pg.image.load("img/snake_tail.png")
+snake_tail_image = pg.image.load("img/TAIL.png")
+snake_tail_image = pg.transform.scale(snake_tail_image, (GRID_SIZE, GRID_SIZE))
 
 apple_image = pg.image.load("img/apple.png")
+apple_image = pg.transform.scale(apple_image, (GRID_SIZE, GRID_SIZE))
 
 clock = pg.time.Clock()
