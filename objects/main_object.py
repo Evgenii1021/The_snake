@@ -13,10 +13,12 @@ from settings import (
     snake_head_image,
     snake_tail_image,
     corner_image,
+    stone_image,
     LEFT,
     RIGHT,
     UP,
     DOWN,
+    COUNT_STONE,
 )
 
 
@@ -43,7 +45,7 @@ class GameObject:
 
 
 class Apple(GameObject):
-    """Класса яблока."""
+    """Класс яблока."""
 
     def __init__(self, occupied_positions=None, images=apple_image):
         """Инициализация дочернего класса яблока."""
@@ -67,6 +69,43 @@ class Apple(GameObject):
     def draw(self):
         """Метод отрисовки яблока."""
         self.draw_cell(screen, images=self.images, position=self.position)
+
+
+class Stone(GameObject):
+    """Класс камня."""
+
+    def __init__(
+        self,
+        count_stone=COUNT_STONE,
+        occupied_positions=None,
+        images=stone_image,
+    ):
+        """Инициализация дочернего класса камня."""
+        super().__init__(images=images)
+        self.positions = []
+        if occupied_positions is None:
+            occupied_positions = []
+        self.count_stone = count_stone
+        self.randomize_position(occupied_positions)
+
+    def randomize_position(self, occupied_positions):
+        """Метод для установки случайного положения камня."""
+        self.positions = []
+        for _ in range(self.count_stone):
+            random_positions = (
+                randrange(0, SCREEN_WIDTH, GRID_SIZE),
+                randrange(0, SCREEN_HEIGHT, GRID_SIZE),
+            )
+            self.position = (
+                random_positions
+                if random_positions not in occupied_positions
+                else self.randomize_position(occupied_positions)
+            )
+            self.positions.append(self.position)
+
+    def draw(self, position):
+        """Метод отрисовки камня."""
+        self.draw_cell(screen, images=self.images, position=position)
 
 
 class Snake(GameObject):

@@ -16,7 +16,7 @@ import sys
 
 import pygame as pg
 
-from objects import Apple, Snake
+from objects import Apple, Snake, Stone
 from settings import UP, DOWN, LEFT, RIGHT, SPEED, clock, screen, bg
 
 
@@ -40,14 +40,22 @@ def handle_keys(game_object):
                 sys.exit()
 
 
-def update_positions(game_object1, game_object2):
+def update_positions(game_object1, game_object2, game_object3):
     """Функция обновления позиций змейки."""
     if game_object2.position in game_object1.positions:
         game_object2.randomize_position(
             occupied_positions=game_object1.positions
         )
         game_object1.length += 1
-    elif game_object1.get_head_position() in game_object1.positions[4:]:
+    elif any(
+        [
+            game_object1.get_head_position() in game_object1.positions[4:],
+            game_object1.get_head_position() in game_object3.positions,
+        ]
+    ):
+        game_object3.randomize_position(
+            occupied_positions=game_object1.positions
+        )
         game_object1.reset()
 
 
@@ -56,7 +64,8 @@ def main():
     pg.init()
 
     snake = Snake()
-    apple = Apple(snake.positions)
+    stone = Stone(occupied_positions=snake.position)
+    apple = Apple(snake.positions + stone.positions)
 
     while True:
         clock.tick(SPEED)
@@ -64,10 +73,12 @@ def main():
 
         handle_keys(snake)
 
-        update_positions(snake, apple)
+        update_positions(snake, apple, stone)
         snake.move()
 
         apple.draw()
+        for position in stone.positions:
+            stone.draw(position=position)
         snake.draw()
         pg.display.update()
 

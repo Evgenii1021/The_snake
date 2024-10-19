@@ -24,6 +24,8 @@ SNAKE_COLOR = GREEN
 
 SPEED = 15
 
+COUNT_STONE = 3
+
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
 pg.display.set_caption("Змейка")
@@ -40,11 +42,14 @@ snake_body_image = pg.transform.scale(snake_body_image, (GRID_SIZE, GRID_SIZE))
 snake_tail_image = pg.image.load("img/TAIL.png")
 snake_tail_image = pg.transform.scale(snake_tail_image, (GRID_SIZE, GRID_SIZE))
 
+corner_image = pg.image.load("img/CORNER.png")
+corner_image = pg.transform.scale(corner_image, (GRID_SIZE, GRID_SIZE))
+
 apple_image = pg.image.load("img/apple.png")
 apple_image = pg.transform.scale(apple_image, (GRID_SIZE, GRID_SIZE))
 
-corner_image = pg.image.load("img/CORNER.png")
-corner_image = pg.transform.scale(corner_image, (GRID_SIZE, GRID_SIZE))
+stone_image = pg.image.load("img/stone.png")
+stone_image = pg.transform.scale(stone_image, (GRID_SIZE, GRID_SIZE))
 
 
 clock = pg.time.Clock()
