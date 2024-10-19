@@ -51,5 +51,7 @@ apple_image = pg.transform.scale(apple_image, (GRID_SIZE, GRID_SIZE))
 stone_image = pg.image.load("img/stone.png")
 stone_image = pg.transform.scale(stone_image, (GRID_SIZE, GRID_SIZE))
 
+# font = pg.font.Font("arial", 24)
+
 
 clock = pg.time.Clock()
