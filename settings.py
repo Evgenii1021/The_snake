@@ -22,7 +22,7 @@ BORDER_COLOR = SOFT_CYAN
 APPLE_COLOR = RED
 SNAKE_COLOR = GREEN
 
-SPEED = 14
+SPEED = 15
 
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -42,5 +42,9 @@ snake_tail_image = pg.transform.scale(snake_tail_image, (GRID_SIZE, GRID_SIZE))
 
 apple_image = pg.image.load("img/apple.png")
 apple_image = pg.transform.scale(apple_image, (GRID_SIZE, GRID_SIZE))
+
+corner_image = pg.image.load("img/CORNER.png")
+corner_image = pg.transform.scale(corner_image, (GRID_SIZE, GRID_SIZE))
+
 
 clock = pg.time.Clock()

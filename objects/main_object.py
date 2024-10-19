@@ -12,6 +12,7 @@ from settings import (
     snake_body_image,
     snake_head_image,
     snake_tail_image,
+    corner_image,
     LEFT,
     RIGHT,
     UP,
@@ -38,9 +39,6 @@ class GameObject:
 
     def draw_cell(self, screen, position, images):
         """Метод для отрисовки одной ячейки."""
-        # rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
-        # pg.draw.rect(screen, body_color, rect)
-        # pg.draw.rect(screen, border_color, rect, 1)
         screen.blit(images, position)
 
 
@@ -103,33 +101,85 @@ class Snake(GameObject):
             self.positions.pop() if len(self.positions) > self.length else None
         )
 
+    def rotate(self, images):
+        """Метод поворота головы и хвоста змейки."""
+        if self.direction == UP:
+            rotated_image_head = pg.transform.rotate(images, 180)
+        elif self.direction == DOWN:
+            rotated_image_head = images
+        elif self.direction == LEFT:
+            rotated_image_head = pg.transform.rotate(images, 270)
+        elif self.direction == RIGHT:
+            rotated_image_head = pg.transform.rotate(images, 90)
+
+        return rotated_image_head
+
     def draw(self):
         """Метод отрисовки змейки."""
-        if self.direction == UP:
-            rotated_image_head = pg.transform.rotate(snake_head_image, 180)
-        elif self.direction == DOWN:
-            rotated_image_head = snake_head_image
-        elif self.direction == LEFT:
-            rotated_image_head = pg.transform.rotate(snake_head_image, 270)
-        elif self.direction == RIGHT:
-            rotated_image_head = pg.transform.rotate(snake_head_image, 90)
-
-        self.draw_cell(screen, self.get_head_position(), rotated_image_head)
+        self.draw_cell(
+            screen, self.get_head_position(), self.rotate(snake_head_image)
+        )
 
         if self.last:
-            if self.direction == UP:
-                rotated_image_tail = snake_tail_image
-            elif self.direction == DOWN:
-                rotated_image_tail = pg.transform.rotate(snake_tail_image, 180)
-            elif self.direction == LEFT:
-                rotated_image_tail = pg.transform.rotate(snake_tail_image, 90)
-            elif self.direction == RIGHT:
-                rotated_image_tail = pg.transform.rotate(snake_tail_image, 270)
-            self.draw_cell(screen, self.last, rotated_image_tail)
+            self.draw_cell(screen, self.last, self.rotate(snake_tail_image))
 
-        if self.length >= 2:
-            for position in self.positions[1:]:
-                self.draw_cell(screen, position, self.images)
+        if self.length > 1:
+            for i in range(1, self.length):
+                current_pos = self.positions[i]
+                prev_pos = self.positions[i - 1]
+                next_pos = (
+                    self.last if i + 1 >= self.length else self.positions[i + 1]
+                )
+
+                if next_pos:
+                    if current_pos[0] == prev_pos[0]:
+                        if current_pos[1] < prev_pos[1]:
+                            if next_pos[0] > current_pos[0]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 270
+                                )
+                            elif next_pos[0] < current_pos[0]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 180
+                                )
+                            else:
+                                segment_image = self.images
+                        else:
+                            if next_pos[0] > current_pos[0]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 0
+                                )
+                            elif next_pos[0] < current_pos[0]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 90
+                                )
+                            else:
+                                segment_image = self.images
+                    else:
+                        if current_pos[0] > prev_pos[0]:
+                            if next_pos[1] > current_pos[1]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 180
+                                )
+                            elif next_pos[1] < current_pos[1]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 90
+                                )
+                            else:
+                                segment_image = self.images
+                        else:
+                            if next_pos[1] > current_pos[1]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 270
+                                )
+                            elif next_pos[1] < current_pos[1]:
+                                segment_image = pg.transform.rotate(
+                                    corner_image, 0
+                                )
+                            else:
+                                segment_image = self.images
+
+                    self.draw_cell(screen, current_pos, segment_image)
 
     def reset(self):
         """Метод сброса змейки."""

@@ -63,9 +63,9 @@ def main():
         screen.blit(bg, (0, 0))
 
         handle_keys(snake)
-        snake.move()
 
         update_positions(snake, apple)
+        snake.move()
 
         apple.draw()
         snake.draw()
