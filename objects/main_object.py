@@ -14,6 +14,7 @@ from settings import (
     snake_tail_image,
     corner_image,
     stone_image,
+    blood_image,
     LEFT,
     RIGHT,
     UP,
@@ -106,6 +107,25 @@ class Stone(GameObject):
     def draw(self, position):
         """Метод отрисовки камня."""
         self.draw_cell(screen, images=self.images, position=position)
+
+
+class Blood(GameObject):
+    """Класс крови."""
+
+    def __init__(
+        self,
+        images=blood_image,
+    ):
+        """Инициализация дочернего класса крови."""
+        super().__init__(images=images)
+        self.positions = []
+
+    def draw(self, position=None):
+        """Метод отрисовки крови."""
+        if position is not None:
+            self.positions.append(position)
+        for posit in self.positions:
+            screen.blit(self.images, posit)
 
 
 class Snake(GameObject):
