@@ -5,7 +5,7 @@ from settings import (
     DEFAULT_COUNT_STONE,
     DEFAULT_POSITION,
     BOARD_BACKGROUND_COLOR,
-    apple_image,
+    soldier_image,
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
     GRID_SIZE,
@@ -45,10 +45,10 @@ class GameObject:
         screen.blit(images, position)
 
 
-class Apple(GameObject):
-    """Класс яблока."""
+class Soldier(GameObject):
+    """Класс солдата."""
 
-    def __init__(self, occupied_positions=None, images=apple_image):
+    def __init__(self, occupied_positions=None, images=soldier_image):
         """Инициализация дочернего класса яблока."""
         super().__init__(images=images)
         if occupied_positions is None:

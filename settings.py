@@ -43,8 +43,10 @@ snake_tail_image = pg.transform.scale(snake_tail_image, (GRID_SIZE, GRID_SIZE))
 corner_image = pg.image.load("img/CORNER.png")
 corner_image = pg.transform.scale(corner_image, (GRID_SIZE, GRID_SIZE))
 
-apple_image = pg.image.load("img/apple.png")
-apple_image = pg.transform.scale(apple_image, (GRID_SIZE, GRID_SIZE))
+soldier_image = pg.image.load("img/soldier2.png")
+soldier_image = pg.transform.scale(
+    soldier_image, (GRID_SIZE + 20, GRID_SIZE + 20)
+)
 
 stone_image = pg.image.load("img/stone.png")
 stone_image = pg.transform.scale(stone_image, (GRID_SIZE, GRID_SIZE))

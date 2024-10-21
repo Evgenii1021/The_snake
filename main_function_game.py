@@ -6,7 +6,14 @@ from settings import DOWN, LEFT, RIGHT, UP
 
 def update_positions(game_object1, game_object2, game_object3, game_object4):
     """Функция обновления позиций змейки."""
-    if game_object2.position in game_object1.positions:
+    if (
+        game_object2.position[0] - 20
+        <= game_object1.positions[0][0]
+        <= game_object2.position[0] + 20
+        and game_object2.position[1] - 20
+        <= game_object1.positions[0][1]
+        <= game_object2.position[1] + 20
+    ):
         game_object4.draw(game_object2.position)
         game_object2.randomize_position(
             occupied_positions=game_object1.positions
