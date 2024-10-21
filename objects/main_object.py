@@ -2,7 +2,7 @@ import pygame as pg
 from random import choice, randrange
 
 from settings import (
-    DEFAULT_COUNT_STONE,
+    DEFAULT_COUNT_TANK,
     DEFAULT_POSITION,
     BOARD_BACKGROUND_COLOR,
     soldier_image,
@@ -14,7 +14,8 @@ from settings import (
     snake_head_image,
     snake_tail_image,
     corner_image,
-    stone_image,
+    tank_image,
+    tank_image2,
     blood_image,
     LEFT,
     RIGHT,
@@ -58,8 +59,8 @@ class Soldier(GameObject):
     def randomize_position(self, occupied_positions):
         """Метод для установки случайного положения солдата."""
         random_positions = (
-            randrange(0, SCREEN_WIDTH, GRID_SIZE),
-            randrange(0, SCREEN_HEIGHT, GRID_SIZE),
+            randrange(0, SCREEN_WIDTH, GRID_SIZE + 20),
+            randrange(0, SCREEN_HEIGHT, GRID_SIZE + 20),
         )
         self.position = (
             random_positions
@@ -72,16 +73,18 @@ class Soldier(GameObject):
         self.draw_cell(screen, images=self.images, position=self.position)
 
 
-class Stone(GameObject):
-    """Класс камня."""
+class Tank(GameObject):
+    """Класс танка."""
 
     def __init__(
         self,
-        count_stone=DEFAULT_COUNT_STONE,
+        count_stone=DEFAULT_COUNT_TANK,
         occupied_positions=None,
-        images=stone_image,
+        images=None,
     ):
         """Инициализация дочернего класса камня."""
+        if images is None:
+            images = [tank_image, tank_image2]
         super().__init__(images=images)
         self.positions = []
         if occupied_positions is None:
@@ -94,8 +97,8 @@ class Stone(GameObject):
         self.positions = []
         for _ in range(self.count_stone):
             random_positions = (
-                randrange(0, SCREEN_WIDTH, GRID_SIZE),
-                randrange(0, SCREEN_HEIGHT, GRID_SIZE),
+                randrange(0, SCREEN_WIDTH, GRID_SIZE + 40),
+                randrange(0, SCREEN_HEIGHT, GRID_SIZE + 20),
             )
             self.position = (
                 random_positions
@@ -106,7 +109,9 @@ class Stone(GameObject):
 
     def draw(self, position):
         """Метод отрисовки камня."""
-        self.draw_cell(screen, images=self.images, position=position)
+        selected_image = choice(self.images)
+
+        self.draw_cell(screen, images=selected_image, position=position)
 
 
 class Blood(GameObject):

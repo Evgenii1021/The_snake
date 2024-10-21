@@ -15,11 +15,11 @@
 import pygame as pg
 import sys
 
-from draw_button import draw_main_menu
+from objects import MainMenu
 from main_game_snake import main
 from settings_menu import settings_menu
 from settings import (
-    DEFAULT_COUNT_STONE,
+    DEFAULT_COUNT_TANK,
     DEFAULT_SPEED,
     screen,
     bg,
@@ -28,12 +28,14 @@ from settings import (
 
 def main_menu():
     """Главное меню игры."""
+    main_menu = MainMenu()
+
     while True:
         screen.blit(bg, (0, 0))
 
         mouse_pos = pg.mouse.get_pos()
 
-        draw_rect = draw_main_menu(mouse_pos)
+        draw_rect = main_menu.draw(mouse_pos)
 
         pg.display.update()
         for event in pg.event.get():
@@ -44,7 +46,7 @@ def main_menu():
             if event.type == pg.MOUSEBUTTONDOWN:
                 if draw_rect[0].collidepoint(mouse_pos):
                     speed = DEFAULT_SPEED
-                    count_stone = DEFAULT_COUNT_STONE
+                    count_stone = DEFAULT_COUNT_TANK
                     main(speed, count_stone)
                 elif draw_rect[1].collidepoint(mouse_pos):
                     settings_menu()

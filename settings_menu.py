@@ -1,7 +1,7 @@
 import pygame as pg
 import sys
 
-from draw_button import draw_settings_menu
+from objects import SettingsMenu
 from main_game_snake import main
 from settings import (
     screen,
@@ -14,12 +14,13 @@ from settings import (
 
 def settings_menu():
     """Меню настроек."""
+    settings_menu = SettingsMenu()
     while True:
         screen.blit(bg, (0, 0))
 
         mouse_pos = pg.mouse.get_pos()
 
-        draw_rect = draw_settings_menu(mouse_pos)
+        draw_rect = settings_menu.draw(mouse_pos)
 
         pg.display.update()
 

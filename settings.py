@@ -50,8 +50,11 @@ soldier_image = pg.transform.scale(
 blood_image = pg.image.load("img/blood.png")
 blood_image = pg.transform.scale(blood_image, (40, 40))
 
-stone_image = pg.image.load("img/stone.png")
-stone_image = pg.transform.scale(stone_image, (GRID_SIZE, GRID_SIZE))
+tank_image = pg.image.load("img/tank.png")
+tank_image = pg.transform.scale(tank_image, (GRID_SIZE + 40, GRID_SIZE + 20))
+
+tank_image2 = pg.image.load("img/tank2.png")
+tank_image2 = pg.transform.scale(tank_image2, (GRID_SIZE + 40, GRID_SIZE + 20))
 
 play_image = pg.image.load("img/but/PLAY.png")
 play_image = pg.transform.scale(play_image, (154, 66))
@@ -121,6 +124,6 @@ HARD_SETTINGS = {
 }
 
 DEFAULT_SPEED = MEDIUM_SETTINGS["SPEED"]
-DEFAULT_COUNT_STONE = MEDIUM_SETTINGS["COUNT_STONE"]
+DEFAULT_COUNT_TANK = MEDIUM_SETTINGS["COUNT_STONE"]
 
 clock = pg.time.Clock()
