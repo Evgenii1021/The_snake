@@ -1,9 +1,12 @@
 import pygame as pg
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
-GRID_SIZE = 20
-GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
-GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
+GRID_SIZE_SNAKE = 20
+GRID_SIZE_SOLDIER = 40
+SIZE_TANK_HEIGHT = 40
+SIZE_TANK_WIDTH = 60
+GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE_SNAKE
+GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE_SNAKE
 DEFAULT_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
 UP = (0, -1)
@@ -12,17 +15,8 @@ LEFT = (-1, 0)
 RIGHT = (1, 0)
 
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-SOFT_CYAN = (93, 216, 228)
-HOVER_COLOR = (255, 255, 0)
 
 BOARD_BACKGROUND_COLOR = WHITE
-BORDER_COLOR = SOFT_CYAN
-APPLE_COLOR = RED
-SNAKE_COLOR = GREEN
-
 
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -32,29 +26,36 @@ bg = pg.image.load("img/bg.jpg")
 bg = pg.transform.scale(bg, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 snake_head_image = pg.image.load("img/HEAD.png")
-snake_head_image = pg.transform.scale(snake_head_image, (GRID_SIZE, GRID_SIZE))
+snake_head_image = pg.transform.scale(
+    snake_head_image, (GRID_SIZE_SNAKE, GRID_SIZE_SNAKE)
+)
 
 snake_body_image = pg.image.load("img/BODY.png")
-snake_body_image = pg.transform.scale(snake_body_image, (GRID_SIZE, GRID_SIZE))
+snake_body_image = pg.transform.scale(
+    snake_body_image, (GRID_SIZE_SNAKE, GRID_SIZE_SNAKE)
+)
 
 snake_tail_image = pg.image.load("img/TAIL.png")
-snake_tail_image = pg.transform.scale(snake_tail_image, (GRID_SIZE, GRID_SIZE))
+snake_tail_image = pg.transform.scale(
+    snake_tail_image, (GRID_SIZE_SNAKE, GRID_SIZE_SNAKE)
+)
 
 corner_image = pg.image.load("img/CORNER.png")
-corner_image = pg.transform.scale(corner_image, (GRID_SIZE, GRID_SIZE))
+corner_image = pg.transform.scale(
+    corner_image, (GRID_SIZE_SNAKE, GRID_SIZE_SNAKE)
+)
 
 soldier_image = pg.image.load("img/soldier2.png")
 soldier_image = pg.transform.scale(
-    soldier_image, (GRID_SIZE + 20, GRID_SIZE + 20)
+    soldier_image, (GRID_SIZE_SOLDIER, GRID_SIZE_SOLDIER)
 )
 blood_image = pg.image.load("img/blood.png")
 blood_image = pg.transform.scale(blood_image, (40, 40))
 
 tank_image = pg.image.load("img/tank.png")
-tank_image = pg.transform.scale(tank_image, (GRID_SIZE + 40, GRID_SIZE + 20))
-
-tank_image2 = pg.image.load("img/tank2.png")
-tank_image2 = pg.transform.scale(tank_image2, (GRID_SIZE + 40, GRID_SIZE + 20))
+tank_image = pg.transform.scale(
+    tank_image, (SIZE_TANK_WIDTH, SIZE_TANK_HEIGHT)
+)
 
 play_image = pg.image.load("img/but/PLAY.png")
 play_image = pg.transform.scale(play_image, (154, 66))

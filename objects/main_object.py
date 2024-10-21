@@ -8,7 +8,10 @@ from settings import (
     soldier_image,
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
-    GRID_SIZE,
+    GRID_SIZE_SNAKE,
+    GRID_SIZE_SOLDIER,
+    SIZE_TANK_HEIGHT,
+    SIZE_TANK_WIDTH,
     screen,
     snake_body_image,
     snake_head_image,
@@ -58,8 +61,8 @@ class Soldier(GameObject):
     def randomize_position(self, occupied_positions):
         """Метод для установки случайного положения солдата."""
         random_positions = (
-            randrange(0, SCREEN_WIDTH, GRID_SIZE + 20),
-            randrange(0, SCREEN_HEIGHT, GRID_SIZE + 20),
+            randrange(0, SCREEN_WIDTH, GRID_SIZE_SOLDIER),
+            randrange(0, SCREEN_HEIGHT, GRID_SIZE_SOLDIER),
         )
         self.position = (
             random_positions
@@ -96,8 +99,8 @@ class Tank(GameObject):
         self.positions = []
         for _ in range(self.count_stone):
             random_positions = (
-                randrange(0, SCREEN_WIDTH, GRID_SIZE + 40),
-                randrange(0, SCREEN_HEIGHT, GRID_SIZE + 20),
+                randrange(0, SCREEN_WIDTH, 10),
+                randrange(0, SCREEN_HEIGHT, 10),
             )
             self.position = (
                 random_positions
@@ -152,8 +155,8 @@ class Snake(GameObject):
 
         dx, dy = self.direction
 
-        head_x = (head_x + dx * GRID_SIZE) % SCREEN_WIDTH
-        head_y = (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT
+        head_x = (head_x + dx * GRID_SIZE_SNAKE) % SCREEN_WIDTH
+        head_y = (head_y + dy * GRID_SIZE_SNAKE) % SCREEN_HEIGHT
 
         new_position = (head_x, head_y)
         self.positions.insert(0, new_position)
@@ -175,6 +178,25 @@ class Snake(GameObject):
 
         return rotated_image_head
 
+    def draw_tail(self):
+        """Метод отрисовки хвоста змейки."""
+        if len(self.positions) == 1:
+            self.draw_cell(screen, self.last, self.rotate(snake_tail_image))
+        else:
+            prev_segment_pos = self.positions[-1]
+            if self.last[0] == prev_segment_pos[0]:
+                if self.last[1] < prev_segment_pos[1]:
+                    segment_image = pg.transform.rotate(snake_tail_image, 0)
+                else:
+                    segment_image = pg.transform.rotate(snake_tail_image, 180)
+            else:
+                if self.last[0] < prev_segment_pos[0]:
+                    segment_image = pg.transform.rotate(snake_tail_image, 90)
+                else:
+                    segment_image = pg.transform.rotate(snake_tail_image, 270)
+
+                self.draw_cell(screen, self.last, segment_image)
+
     def draw(self):
         """Метод отрисовки змейки."""
         self.draw_cell(
@@ -182,32 +204,7 @@ class Snake(GameObject):
         )
 
         if self.last:
-            if len(self.positions) == 1:
-                self.draw_cell(screen, self.last, self.rotate(snake_tail_image))
-            else:
-                prev_segment_pos = self.positions[-1]
-                if (
-                    self.last[0] == prev_segment_pos[0]
-                ):
-                    if self.last[1] < prev_segment_pos[1]:
-                        segment_image = pg.transform.rotate(
-                            snake_tail_image, 0
-                        )
-                    else:
-                        segment_image = pg.transform.rotate(
-                            snake_tail_image, 180
-                        )
-                else:
-                    if self.last[0] < prev_segment_pos[0]:
-                        segment_image = pg.transform.rotate(
-                            snake_tail_image, 90
-                        )
-                    else:
-                        segment_image = pg.transform.rotate(
-                            snake_tail_image, 270
-                        )
-
-                self.draw_cell(screen, self.last, segment_image)
+            self.draw_tail()
 
         if self.length > 1:
             for i in range(1, self.length):
