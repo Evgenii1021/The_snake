@@ -47,63 +47,63 @@ soldier_image = pg.image.load("img/soldier2.png")
 soldier_image = pg.transform.scale(
     soldier_image, (GRID_SIZE + 20, GRID_SIZE + 20)
 )
+blood_image = pg.image.load("img/blood.png")
+blood_image = pg.transform.scale(blood_image, (40, 40))
 
 stone_image = pg.image.load("img/stone.png")
 stone_image = pg.transform.scale(stone_image, (GRID_SIZE, GRID_SIZE))
 
-play_image = pg.image.load("img/PLAY.png")
+play_image = pg.image.load("img/but/PLAY.png")
 play_image = pg.transform.scale(play_image, (154, 66))
 
-settings_image = pg.image.load("img/SETTINGS.png")
+settings_image = pg.image.load("img/but/SETTINGS.png")
 settings_image = pg.transform.scale(settings_image, (154, 66))
 
-settings_image_all = pg.image.load("img/SETTINGS.png")
+settings_image_all = pg.image.load("img/but/SETTINGS.png")
 settings_image_all = pg.transform.scale(settings_image, (193, 83))
 
-exit_image = pg.image.load("img/EXIT.png")
+exit_image = pg.image.load("img/but/EXIT.png")
 exit_image = pg.transform.scale(exit_image, (154, 66))
 
-play_image_hover = pg.image.load("img/PLAY_HOVER.png")
+play_image_hover = pg.image.load("img/but/PLAY_HOVER.png")
 play_image_hover = pg.transform.scale(play_image_hover, (154, 66))
 
-settings_image_hover = pg.image.load("img/SETTINGS_HOVER.png")
+settings_image_hover = pg.image.load("img/but/SETTINGS_HOVER.png")
 settings_image_hover = pg.transform.scale(settings_image_hover, (154, 66))
 
-exit_image_hover = pg.image.load("img/EXIT_HOVER.png")
+exit_image_hover = pg.image.load("img/but/EXIT_HOVER.png")
 exit_image_hover = pg.transform.scale(exit_image_hover, (154, 66))
 
-back_image = pg.image.load("img/BACK.png")
+back_image = pg.image.load("img/but/BACK.png")
 back_image = pg.transform.scale(back_image, (154, 66))
 
-back_image_hover = pg.image.load("img/BACK_HOVER.png")
+back_image_hover = pg.image.load("img/but/BACK_HOVER.png")
 back_image_hover = pg.transform.scale(back_image_hover, (154, 66))
 
-menu_image = pg.image.load("img/MENU.png")
+menu_image = pg.image.load("img/but/MENU.png")
 menu_image = pg.transform.scale(menu_image, (76, 32))
 
-menu_image_hover = pg.image.load("img/MENU_HOVER.png")
+menu_image_hover = pg.image.load("img/but/MENU_HOVER.png")
 menu_image_hover = pg.transform.scale(menu_image_hover, (76, 32))
 
-easy_image = pg.image.load("img/EASY.png")
+easy_image = pg.image.load("img/but/EASY.png")
 easy_image = pg.transform.scale(easy_image, (154, 66))
 
-easy_image_hover = pg.image.load("img/EASY_HOVER.png")
+easy_image_hover = pg.image.load("img/but/EASY_HOVER.png")
 easy_image_hover = pg.transform.scale(easy_image_hover, (154, 66))
 
-middle_image = pg.image.load("img/MIDDLE.png")
+middle_image = pg.image.load("img/but/MIDDLE.png")
 middle_image = pg.transform.scale(middle_image, (154, 66))
 
-middle_image_hover = pg.image.load("img/MIDDLE_HOVER.png")
+middle_image_hover = pg.image.load("img/but/MIDDLE_HOVER.png")
 middle_image_hover = pg.transform.scale(middle_image_hover, (154, 66))
 
-hard_image = pg.image.load("img/HARD.png")
+hard_image = pg.image.load("img/but/HARD.png")
 hard_image = pg.transform.scale(hard_image, (154, 66))
 
-hard_image_hover = pg.image.load("img/HARD_HOVER.png")
+hard_image_hover = pg.image.load("img/but/HARD_HOVER.png")
 hard_image_hover = pg.transform.scale(hard_image_hover, (154, 66))
 
-blood_image = pg.image.load("img/blood.png")
-blood_image = pg.transform.scale(blood_image, (40, 40))
 
 EASY_SETTINGS = {
     "SPEED": 10,

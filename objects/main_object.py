@@ -49,14 +49,14 @@ class Soldier(GameObject):
     """Класс солдата."""
 
     def __init__(self, occupied_positions=None, images=soldier_image):
-        """Инициализация дочернего класса яблока."""
+        """Инициализация дочернего класса солдата."""
         super().__init__(images=images)
         if occupied_positions is None:
             occupied_positions = []
         self.randomize_position(occupied_positions)
 
     def randomize_position(self, occupied_positions):
-        """Метод для установки случайного положения яблока."""
+        """Метод для установки случайного положения солдата."""
         random_positions = (
             randrange(0, SCREEN_WIDTH, GRID_SIZE),
             randrange(0, SCREEN_HEIGHT, GRID_SIZE),
@@ -68,7 +68,7 @@ class Soldier(GameObject):
         )
 
     def draw(self):
-        """Метод отрисовки яблока."""
+        """Метод отрисовки солдата."""
         self.draw_cell(screen, images=self.images, position=self.position)
 
 
