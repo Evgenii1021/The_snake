@@ -15,7 +15,6 @@ from settings import (
     snake_tail_image,
     corner_image,
     tank_image,
-    tank_image2,
     blood_image,
     LEFT,
     RIGHT,
@@ -84,7 +83,7 @@ class Tank(GameObject):
     ):
         """Инициализация дочернего класса камня."""
         if images is None:
-            images = [tank_image, tank_image2]
+            images = tank_image
         super().__init__(images=images)
         self.positions = []
         if occupied_positions is None:
@@ -109,9 +108,7 @@ class Tank(GameObject):
 
     def draw(self, position):
         """Метод отрисовки камня."""
-        selected_image = choice(self.images)
-
-        self.draw_cell(screen, images=selected_image, position=position)
+        self.draw_cell(screen, images=self.images, position=position)
 
 
 class Blood(GameObject):
@@ -185,7 +182,32 @@ class Snake(GameObject):
         )
 
         if self.last:
-            self.draw_cell(screen, self.last, self.rotate(snake_tail_image))
+            if len(self.positions) == 1:
+                self.draw_cell(screen, self.last, self.rotate(snake_tail_image))
+            else:
+                prev_segment_pos = self.positions[-1]
+                if (
+                    self.last[0] == prev_segment_pos[0]
+                ):
+                    if self.last[1] < prev_segment_pos[1]:
+                        segment_image = pg.transform.rotate(
+                            snake_tail_image, 0
+                        )
+                    else:
+                        segment_image = pg.transform.rotate(
+                            snake_tail_image, 180
+                        )
+                else:
+                    if self.last[0] < prev_segment_pos[0]:
+                        segment_image = pg.transform.rotate(
+                            snake_tail_image, 90
+                        )
+                    else:
+                        segment_image = pg.transform.rotate(
+                            snake_tail_image, 270
+                        )
+
+                self.draw_cell(screen, self.last, segment_image)
 
         if self.length > 1:
             for i in range(1, self.length):
