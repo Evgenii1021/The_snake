@@ -27,7 +27,7 @@ SNAKE_COLOR = GREEN
 
 SPEED = 15
 
-COUNT_STONE = 4
+COUNT_STONE = 6
 
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -110,5 +110,34 @@ blood_image = pg.transform.scale(blood_image, (40, 40))
 
 font = pg.font.SysFont("arial", 24)
 
+EASY_SETTINGS = {
+    "SPEED": 10,
+    "COUNT_STONE": 3,
+}
+
+MEDIUM_SETTINGS = {
+    "SPEED": 15,
+    "COUNT_STONE": 5,
+}
+
+HARD_SETTINGS = {
+    "SPEED": 20,
+    "COUNT_STONE": 7,
+}
+
+
+def apply_settings(difficulty_settings):
+    """
+    Функция для применения настроек сложности.
+
+    Аргументы:
+    difficulty_settings (dict): Словарь с настройками для определенного уровня сложности.
+    """
+    global SPEED, COUNT_STONE
+    SPEED = difficulty_settings["SPEED"]
+    COUNT_STONE = difficulty_settings["COUNT_STONE"]
+    print(SPEED, COUNT_STONE)
+
+print(SPEED, COUNT_STONE)
 
 clock = pg.time.Clock()

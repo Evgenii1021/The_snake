@@ -28,7 +28,7 @@ from settings import (
     bg,
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
-    COUNT_STONE,
+    # COUNT_STONE,
     settings_image,
     play_image,
     exit_image,
@@ -46,6 +46,10 @@ from settings import (
     back_image_hover,
     menu_image,
     menu_image_hover,
+    apply_settings,
+    EASY_SETTINGS,
+    MEDIUM_SETTINGS,
+    HARD_SETTINGS,
 )
 
 
@@ -155,8 +159,6 @@ def settings_menu():
                 back_image_hover,
                 (SCREEN_WIDTH // 2 - (154 / 2), SCREEN_HEIGHT // 2 + 140),
             )
-        global SPEED
-        global COUNT_STONE
 
         pg.display.update()
 
@@ -167,16 +169,14 @@ def settings_menu():
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 if easy_rect.collidepoint(mouse_pos):
-                    SPEED = 15
-                    COUNT_STONE = 2
+                    apply_settings(EASY_SETTINGS)
                 elif middle_rect.collidepoint(mouse_pos):
-                    SPEED = 20
-                    COUNT_STONE = 3
+                    apply_settings(MEDIUM_SETTINGS)
                 elif hard_rect.collidepoint(mouse_pos):
-                    SPEED = 25
-                    COUNT_STONE = 4
+                    apply_settings(HARD_SETTINGS)
                 elif back_rect.collidepoint(mouse_pos):
                     main_menu()
+                main()
 
 
 def handle_keys_main(game_object, menu_rect, mouse_pos):
@@ -205,6 +205,8 @@ def handle_keys_main(game_object, menu_rect, mouse_pos):
 
 def main():
     """Основная функция."""
+    apply_settings(HARD_SETTINGS)
+    print(SPEED)
     snake = Snake()
     stone = Stone(occupied_positions=snake.position)
     apple = Apple(snake.positions + stone.positions)
@@ -236,6 +238,7 @@ def main():
         for position in stone.positions:
             stone.draw(position=position)
         snake.draw()
+        # print(SPEED)
         pg.display.update()
 
 
