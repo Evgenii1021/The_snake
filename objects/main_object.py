@@ -2,6 +2,7 @@ import pygame as pg
 from random import choice, randrange
 
 from settings import (
+    DEFAULT_COUNT_STONE,
     DEFAULT_POSITION,
     BOARD_BACKGROUND_COLOR,
     apple_image,
@@ -19,7 +20,6 @@ from settings import (
     RIGHT,
     UP,
     DOWN,
-    COUNT_STONE,
 )
 
 
@@ -77,7 +77,7 @@ class Stone(GameObject):
 
     def __init__(
         self,
-        count_stone=COUNT_STONE,
+        count_stone=DEFAULT_COUNT_STONE,
         occupied_positions=None,
         images=stone_image,
     ):

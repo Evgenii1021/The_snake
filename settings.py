@@ -1,7 +1,5 @@
 import pygame as pg
 
-pg.init()
-
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
@@ -25,9 +23,6 @@ BORDER_COLOR = SOFT_CYAN
 APPLE_COLOR = RED
 SNAKE_COLOR = GREEN
 
-SPEED = 15
-
-COUNT_STONE = 6
 
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 
@@ -108,8 +103,6 @@ hard_image_hover = pg.transform.scale(hard_image_hover, (154, 66))
 blood_image = pg.image.load("img/blood.png")
 blood_image = pg.transform.scale(blood_image, (40, 40))
 
-font = pg.font.SysFont("arial", 24)
-
 EASY_SETTINGS = {
     "SPEED": 10,
     "COUNT_STONE": 3,
@@ -125,19 +118,7 @@ HARD_SETTINGS = {
     "COUNT_STONE": 7,
 }
 
-
-def apply_settings(difficulty_settings):
-    """
-    Функция для применения настроек сложности.
-
-    Аргументы:
-    difficulty_settings (dict): Словарь с настройками для определенного уровня сложности.
-    """
-    global SPEED, COUNT_STONE
-    SPEED = difficulty_settings["SPEED"]
-    COUNT_STONE = difficulty_settings["COUNT_STONE"]
-    print(SPEED, COUNT_STONE)
-
-print(SPEED, COUNT_STONE)
+DEFAULT_SPEED = MEDIUM_SETTINGS["SPEED"]
+DEFAULT_COUNT_STONE = MEDIUM_SETTINGS["COUNT_STONE"]
 
 clock = pg.time.Clock()

@@ -1,28 +1,7 @@
+import pygame as pg
 import sys
 
-import pygame as pg
-
-from settings import (
-    SPEED,
-    clock,
-    screen,
-    bg,
-    BLACK,
-    GREEN,
-    SOFT_CYAN,
-    RED,
-    font,
-    WHITE,
-    SCREEN_WIDTH,
-    SCREEN_HEIGHT,
-    HOVER_COLOR,
-    COUNT_STONE,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    blood_image,
-)
+from settings import DOWN, LEFT, RIGHT, UP
 
 
 def update_positions(game_object1, game_object2, game_object3, game_object4):
@@ -43,3 +22,27 @@ def update_positions(game_object1, game_object2, game_object3, game_object4):
             occupied_positions=game_object1.positions
         )
         game_object1.reset()
+
+
+def handle_keys_main(game_object, menu_rect, mouse_pos):
+    """Функция обработки нажатий клавиш."""
+
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            sys.exit()
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_UP and game_object.direction != DOWN:
+                game_object.update_direction(UP)
+            elif event.key == pg.K_DOWN and game_object.direction != UP:
+                game_object.update_direction(DOWN)
+            elif event.key == pg.K_LEFT and game_object.direction != RIGHT:
+                game_object.update_direction(LEFT)
+            elif event.key == pg.K_RIGHT and game_object.direction != LEFT:
+                game_object.update_direction(RIGHT)
+            elif event.key == pg.K_ESCAPE:
+                pg.quit()
+                sys.exit()
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if menu_rect.collidepoint(mouse_pos):
+                return False
