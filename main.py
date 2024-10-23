@@ -15,6 +15,7 @@
 import pygame as pg
 import sys
 
+from main_function_game import handle_quit_event
 from objects import MainMenu
 from main_game_snake import main
 from settings_menu import settings_menu
@@ -39,9 +40,7 @@ def main_menu():
 
         pg.display.update()
         for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
-                sys.exit()
+            handle_quit_event(event)
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 if draw_rect[0].collidepoint(mouse_pos):

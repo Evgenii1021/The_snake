@@ -10,8 +10,6 @@ from settings import (
     SCREEN_HEIGHT,
     GRID_SIZE_SNAKE,
     GRID_SIZE_SOLDIER,
-    SIZE_TANK_HEIGHT,
-    SIZE_TANK_WIDTH,
     screen,
     snake_body_image,
     snake_head_image,
@@ -162,11 +160,13 @@ class Snake(GameObject):
         self.positions.insert(0, new_position)
 
         self.last = (
-            self.positions.pop() if len(self.positions) > self.length else None
+            self.positions.pop()
+            if len(self.positions) > self.length
+            else self.last
         )
 
     def rotate(self, images):
-        """Метод поворота головы и хвоста змейки."""
+        """Метод поворота головы змейки."""
         if self.direction == UP:
             rotated_image_head = pg.transform.rotate(images, 180)
         elif self.direction == DOWN:
@@ -177,6 +177,173 @@ class Snake(GameObject):
             rotated_image_head = pg.transform.rotate(images, 90)
 
         return rotated_image_head
+
+    def draw(self):
+        """Метод отрисовки змейки."""
+        self.draw_cell(
+            screen, self.get_head_position(), self.rotate(snake_head_image)
+        )
+
+        if self.last:
+            self.draw_tail()
+
+<<<<<<< HEAD
+        if len(self.positions) > 1:
+=======
+        if self.length > 1:
+>>>>>>> refs/remotes/origin/version-2.0
+            for i in range(1, self.length):
+                current_pos = self.positions[i]
+                prev_pos = self.positions[i - 1]
+                next_pos = (
+                    self.last
+                    if i + 1 >= len(self.positions)
+                    else self.positions[i + 1]
+                )
+
+<<<<<<< HEAD
+=======
+                print(current_pos, prev_pos, next_pos)
+
+>>>>>>> refs/remotes/origin/version-2.0
+                segment_image = self.get_segment_image(
+                    current_pos, prev_pos, next_pos
+                )
+                self.draw_cell(screen, current_pos, segment_image)
+
+<<<<<<< HEAD
+    def get_segment_image(self, current_pos, prev_pos, next_pos):
+        """Возвращает правильное изображение для сегмента тела змеи."""
+        if current_pos[0] == prev_pos[0]:
+            return self.get_vertical_segment_image(
+                current_pos, prev_pos, next_pos
+            )
+        else:
+=======
+        # if self.length > 1:
+        #     for i in range(1, self.length):
+        #         current_pos = self.positions[i]
+        #         prev_pos = self.positions[i - 1]
+        #         next_pos = (
+        #             self.last if i + 1 >= self.length else self.positions[i + 1]
+        #         )
+
+        #         if next_pos:
+        #             if current_pos[0] == prev_pos[0]:
+        #                 if current_pos[1] < prev_pos[1]:
+        #                     if next_pos[0] > current_pos[0]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 270
+        #                         )
+        #                     elif next_pos[0] < current_pos[0]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 180
+        #                         )
+        #                     else:
+        #                         segment_image = self.images
+        #                 else:
+        #                     if next_pos[0] > current_pos[0]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 0
+        #                         )
+        #                     elif next_pos[0] < current_pos[0]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 90
+        #                         )
+        #                     else:
+        #                         segment_image = self.images
+        #             else:
+        #                 if current_pos[0] > prev_pos[0]:
+        #                     if next_pos[1] > current_pos[1]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 180
+        #                         )
+        #                     elif next_pos[1] < current_pos[1]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 90
+        #                         )
+        #                     else:
+        #                         segment_image = self.images
+        #                 else:
+        #                     if next_pos[1] > current_pos[1]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 270
+        #                         )
+        #                     elif next_pos[1] < current_pos[1]:
+        #                         segment_image = pg.transform.rotate(
+        #                             corner_image, 0
+        #                         )
+        #                     else:
+        #                         segment_image = self.images
+
+        #             self.draw_cell(screen, current_pos, segment_image)
+
+    def get_segment_image(self, current_pos, prev_pos, next_pos):
+        """Возвращает правильное изображение для сегмента тела змеи."""
+        if current_pos[0] == prev_pos[0]:  # Движение по вертикали
+            return self.get_vertical_segment_image(
+                current_pos, prev_pos, next_pos
+            )
+        else:  # Движение по горизонтали
+>>>>>>> refs/remotes/origin/version-2.0
+            return self.get_horizontal_segment_image(
+                current_pos, prev_pos, next_pos
+            )
+
+<<<<<<< HEAD
+    def get_vertical_segment_image(self, current_pos, prev_pos, next_pos):
+        """Возвращает изображение для сегмента при вертикальном движении."""
+        if next_pos is None:
+            return self.images
+
+        if current_pos[1] < prev_pos[1]:
+            if next_pos[0] > current_pos[0]:
+                return pg.transform.rotate(corner_image, 270)
+            elif next_pos[0] < current_pos[0]:
+                return pg.transform.rotate(corner_image, 180)
+            else:
+                return self.images
+        else:
+            if next_pos[0] > current_pos[0]:
+                return pg.transform.rotate(corner_image, 0)
+            elif next_pos[0] < current_pos[0]:
+                return pg.transform.rotate(corner_image, 90)
+            else:
+                return self.images
+
+    def get_horizontal_segment_image(self, current_pos, prev_pos, next_pos):
+        """Возвращает изображение для сегмента при горизонтальном движении."""
+        if current_pos[0] > prev_pos[0]:
+            if next_pos[1] > current_pos[1]:
+                return pg.transform.rotate(corner_image, 180)
+            elif next_pos[1] < current_pos[1]:
+                return pg.transform.rotate(corner_image, 90)
+            else:
+                return self.images
+        else:
+            if next_pos[1] > current_pos[1]:
+                return pg.transform.rotate(corner_image, 270)
+            elif next_pos[1] < current_pos[1]:
+                return pg.transform.rotate(corner_image, 0)
+            else:
+=======
+    def get_horizontal_segment_image(self, current_pos, prev_pos, next_pos):
+        """Возвращает изображение для сегмента при горизонтальном движении."""
+        if current_pos[0] > prev_pos[0]:  # Вправо
+            if next_pos[1] > current_pos[1]:  # Поворот вниз
+                return pg.transform.rotate(corner_image, 180)
+            elif next_pos[1] < current_pos[1]:  # Поворот вверх
+                return pg.transform.rotate(corner_image, 90)
+            else:  # Прямой участок
+                return self.images
+        else:  # Влево
+            if next_pos[1] > current_pos[1]:  # Поворот вниз
+                return pg.transform.rotate(corner_image, 270)
+            elif next_pos[1] < current_pos[1]:  # Поворот вверх
+                return pg.transform.rotate(corner_image, 0)
+            else:  # Прямой участок
+>>>>>>> refs/remotes/origin/version-2.0
+                return self.images
 
     def draw_tail(self):
         """Метод отрисовки хвоста змейки."""
@@ -195,74 +362,7 @@ class Snake(GameObject):
                 else:
                     segment_image = pg.transform.rotate(snake_tail_image, 270)
 
-                self.draw_cell(screen, self.last, segment_image)
-
-    def draw(self):
-        """Метод отрисовки змейки."""
-        self.draw_cell(
-            screen, self.get_head_position(), self.rotate(snake_head_image)
-        )
-
-        if self.last:
-            self.draw_tail()
-
-        if self.length > 1:
-            for i in range(1, self.length):
-                current_pos = self.positions[i]
-                prev_pos = self.positions[i - 1]
-                next_pos = (
-                    self.last if i + 1 >= self.length else self.positions[i + 1]
-                )
-
-                if next_pos:
-                    if current_pos[0] == prev_pos[0]:
-                        if current_pos[1] < prev_pos[1]:
-                            if next_pos[0] > current_pos[0]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 270
-                                )
-                            elif next_pos[0] < current_pos[0]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 180
-                                )
-                            else:
-                                segment_image = self.images
-                        else:
-                            if next_pos[0] > current_pos[0]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 0
-                                )
-                            elif next_pos[0] < current_pos[0]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 90
-                                )
-                            else:
-                                segment_image = self.images
-                    else:
-                        if current_pos[0] > prev_pos[0]:
-                            if next_pos[1] > current_pos[1]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 180
-                                )
-                            elif next_pos[1] < current_pos[1]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 90
-                                )
-                            else:
-                                segment_image = self.images
-                        else:
-                            if next_pos[1] > current_pos[1]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 270
-                                )
-                            elif next_pos[1] < current_pos[1]:
-                                segment_image = pg.transform.rotate(
-                                    corner_image, 0
-                                )
-                            else:
-                                segment_image = self.images
-
-                    self.draw_cell(screen, current_pos, segment_image)
+            self.draw_cell(screen, self.last, segment_image)
 
     def reset(self):
         """Метод сброса змейки."""
