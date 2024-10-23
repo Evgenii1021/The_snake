@@ -15,7 +15,7 @@ def main(speed, count_stone):
     pg.init()
 
     snake = Snake()
-    tank = Tank(count_stone=count_stone, occupied_positions=snake.position)
+    tank = Tank(count_stone=count_stone, occupied_positions=snake.positions)
     soldier = Soldier(snake.positions + tank.positions)
     blood = Blood()
     main_game_menu = MainGameMenu()

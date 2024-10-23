@@ -15,8 +15,8 @@
 import pygame as pg
 import sys
 
-from main_function_game import handle_quit_event
 from objects import MainMenu
+from main_function_game import handle_quit_event
 from main_game_snake import main
 from settings_menu import settings_menu
 from settings import (

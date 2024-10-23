@@ -5,6 +5,8 @@ from settings import (
     DEFAULT_COUNT_TANK,
     DEFAULT_POSITION,
     BOARD_BACKGROUND_COLOR,
+    SIZE_TANK_HEIGHT,
+    SIZE_TANK_WIDTH,
     soldier_image,
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
@@ -82,33 +84,37 @@ class Tank(GameObject):
         occupied_positions=None,
         images=None,
     ):
-        """Инициализация дочернего класса камня."""
+        """Инициализация дочернего класса танка."""
         if images is None:
             images = tank_image
         super().__init__(images=images)
-        self.positions = []
         if occupied_positions is None:
             occupied_positions = []
+        self.occupied_positions = []
         self.count_stone = count_stone
         self.randomize_position(occupied_positions)
 
     def randomize_position(self, occupied_positions):
-        """Метод для установки случайного положения камня."""
+        """Метод для установки случайного положения танка."""
         self.positions = []
+        self.occupied_positions = []
         for _ in range(self.count_stone):
             random_positions = (
-                randrange(0, SCREEN_WIDTH, 10),
-                randrange(0, SCREEN_HEIGHT, 10),
+                randrange(0, SCREEN_WIDTH - 40, SIZE_TANK_WIDTH),
+                randrange(0, SCREEN_HEIGHT - 40, SIZE_TANK_HEIGHT),
             )
             self.position = (
                 random_positions
-                if random_positions not in occupied_positions
+                if random_positions
+                not in (occupied_positions + self.occupied_positions)
                 else self.randomize_position(occupied_positions)
             )
             self.positions.append(self.position)
+            self.occupied_positions.append(self.position)
+        return self.position
 
     def draw(self, position):
-        """Метод отрисовки камня."""
+        """Метод отрисовки танка."""
         self.draw_cell(screen, images=self.images, position=position)
 
 

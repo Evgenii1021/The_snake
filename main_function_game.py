@@ -25,7 +25,7 @@ def update_positions(game_object1, game_object2, game_object3, game_object4):
             any(
                 all(
                     [
-                        tank_x <= head_x <= tank_x + 60,
+                        tank_x <= head_x <= tank_x + 50,
                         tank_y <= head_y <= tank_y + 30,
                     ]
                 )
@@ -33,11 +33,14 @@ def update_positions(game_object1, game_object2, game_object3, game_object4):
             ),
         ]
     ):
+        game_object1.reset()
         game_object3.randomize_position(
             occupied_positions=game_object1.positions
         )
+        game_object2.randomize_position(
+            occupied_positions=game_object1.positions + game_object3.positions
+        )
         game_object4.positions = []
-        game_object1.reset()
 
 
 def handle_quit_event(event):
