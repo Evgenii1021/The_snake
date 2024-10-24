@@ -47,6 +47,26 @@ class GameObject:
         """Метод для отрисовки одной ячейки."""
         screen.blit(images, position)
 
+    def randomize_position(
+        self,
+        screen_width,
+        screen_height,
+        object_width,
+        object_height,
+        occupied_positions=None,
+    ):
+        """Метод для установки случайного положения объекта."""
+        if occupied_positions is None:
+            occupied_positions = []
+
+        while True:
+            random_position = (
+                randrange(0, screen_width - object_width, object_width),
+                randrange(0, screen_height - object_height, object_height),
+            )
+            if random_position not in occupied_positions:
+                return random_position
+
 
 class Soldier(GameObject):
     """Класс солдата."""
@@ -56,18 +76,16 @@ class Soldier(GameObject):
         super().__init__(images=images)
         if occupied_positions is None:
             occupied_positions = []
-        self.randomize_position(occupied_positions)
+        self.randomize_positions(occupied_positions)
 
-    def randomize_position(self, occupied_positions):
+    def randomize_positions(self, occupied_positions):
         """Метод для установки случайного положения солдата."""
-        random_positions = (
-            randrange(0, SCREEN_WIDTH, GRID_SIZE_SOLDIER),
-            randrange(0, SCREEN_HEIGHT, GRID_SIZE_SOLDIER),
-        )
-        self.position = (
-            random_positions
-            if random_positions not in occupied_positions
-            else self.randomize_position(occupied_positions)
+        self.position = self.randomize_position(
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            GRID_SIZE_SOLDIER,
+            GRID_SIZE_SOLDIER,
+            occupied_positions,
         )
 
     def draw(self):
@@ -92,26 +110,23 @@ class Tank(GameObject):
             occupied_positions = []
         self.occupied_positions = []
         self.count_stone = count_stone
-        self.randomize_position(occupied_positions)
+        self.randomize_positions(occupied_positions)
 
-    def randomize_position(self, occupied_positions):
+    def randomize_positions(self, occupied_positions):
         """Метод для установки случайного положения танка."""
         self.positions = []
         self.occupied_positions = []
         for _ in range(self.count_stone):
-            random_positions = (
-                randrange(0, SCREEN_WIDTH - 40, SIZE_TANK_WIDTH),
-                randrange(0, SCREEN_HEIGHT - 40, SIZE_TANK_HEIGHT),
-            )
-            self.position = (
-                random_positions
-                if random_positions
-                not in (occupied_positions + self.occupied_positions)
-                else self.randomize_position(occupied_positions)
+
+            self.position = self.randomize_position(
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                SIZE_TANK_WIDTH,
+                SIZE_TANK_HEIGHT,
+                occupied_positions + self.occupied_positions,
             )
             self.positions.append(self.position)
             self.occupied_positions.append(self.position)
-        return self.position
 
     def draw(self, position):
         """Метод отрисовки танка."""

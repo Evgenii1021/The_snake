@@ -15,7 +15,7 @@ def update_positions(game_object1, game_object2, game_object3, game_object4):
         ]
     ):
         game_object4.draw(game_object2.position)
-        game_object2.randomize_position(
+        game_object2.randomize_positions(
             occupied_positions=game_object1.positions + game_object3.positions
         )
         game_object1.length += 1
@@ -34,10 +34,10 @@ def update_positions(game_object1, game_object2, game_object3, game_object4):
         ]
     ):
         game_object1.reset()
-        game_object3.randomize_position(
+        game_object3.randomize_positions(
             occupied_positions=game_object1.positions
         )
-        game_object2.randomize_position(
+        game_object2.randomize_positions(
             occupied_positions=game_object1.positions + game_object3.positions
         )
         game_object4.positions = []
