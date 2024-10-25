@@ -1,3 +1,38 @@
+"""
+Модуль с настройками и константами для игры 'Змейка'.
+
+Содержит определения размеров экрана, размеров игровых объектов и
+различные константы, необходимые для работы игры.
+
+Константы:
+- SCREEN_WIDTH, SCREEN_HEIGHT: размеры окна игры.
+- GRID_SIZE_SNAKE: размер клетки для змейки.
+- GRID_SIZE_SOLDIER: размер клетки для солдата.
+- SIZE_TANK_WIDTH, SIZE_TANK_HEIGHT: размеры танка.
+- GRID_WIDTH, GRID_HEIGHT: размеры игрового поля в клетках.
+- DEFAULT_POSITION: начальная позиция змейки на экране.
+
+Направления движения:
+- UP, DOWN, LEFT, RIGHT: кортежи, определяющие направления движения.
+
+Цвета:
+- WHITE: цвет белый в RGB формате.
+- BOARD_BACKGROUND_COLOR: цвет фона игрового поля.
+
+Загрузка изображений:
+- Изображения для различных объектов игры (змейка, солдаты, танки, кнопки меню)
+  загружаются и изменяются по размеру для корректного отображения.
+
+Настройки сложности:
+- EASY_SETTINGS, MEDIUM_SETTINGS, HARD_SETTINGS: словари с параметрами
+  скорости и количества препятствий для каждого уровня сложности.
+
+DEFAULT_SPEED и DEFAULT_COUNT_TANK: значения по умолчанию для
+  скорости игры и количества танков.
+
+clock: объект для контроля времени и частоты обновления кадров в игре.
+"""
+
 import pygame as pg
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -53,9 +88,8 @@ blood_image = pg.image.load("img/blood.png")
 blood_image = pg.transform.scale(blood_image, (40, 40))
 
 tank_image = pg.image.load("img/tank.png")
-tank_image = pg.transform.scale(
-    tank_image, (SIZE_TANK_WIDTH, SIZE_TANK_HEIGHT)
-)
+tank_image = pg.transform.scale(tank_image,
+                                (SIZE_TANK_WIDTH, SIZE_TANK_HEIGHT))
 
 play_image = pg.image.load("img/but/PLAY.png")
 play_image = pg.transform.scale(play_image, (154, 66))
