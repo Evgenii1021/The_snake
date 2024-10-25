@@ -24,24 +24,15 @@
   - Улучшенное взаимодействие объектов.
   - Добавлен эффект следа крови при съедании солдатика.
 
-<img src="img/screen/Menu.png" alt="Меню" width="210" height="170">
-<img src="img/screen/Settings.png" alt="Настройки" width="210" height="170">
+<div style="display: flex; flex-direction: row; gap: 2px; margin: 0; padding: 0;">
+  <img src="img/screen/Menu.png" alt="Меню" width="210" height="170">
+  <img src="img/screen/Settings.png" alt="Настройки" width="210" height="170">
+</div>
 
 <div style="display: flex; flex-direction: row; gap: 2px; margin: 0; padding: 0;">
-  <figure style='margin: 0;'>
-    <img src="img/screen/Easy.png" alt="Легкий уровень" width="210" height="170">
-    <figcaption style='text-align: center;'>Легкий уровень</figcaption>
-  </figure>
-
-  <figure style='margin: 0;'>
-    <img src="img/screen/Middle.png" alt="Средний уровень" width="210" height="170">
-    <figcaption style='text-align: center;'>Средний уровень</figcaption>
-  </figure>
-
-  <figure style='margin: 0;'>
-    <img src="img/screen/Hard.png" alt="Тяжелый уровень" width="210" height="170">
-    <figcaption style='text-align: center;'>Тяжелый уровень</figcaption>
-  </figure>
+  <img src="img/screen/Easy.png" alt="Легкий уровень" width="210" height="170">
+  <img src="img/screen/Middle.png" alt="Средний уровень" width="210" height="170">
+  <img src="img/screen/Hard.png" alt="Тяжелый уровень" width="210" height="170">
 </div>
 
 ## Как переключаться между версиями
